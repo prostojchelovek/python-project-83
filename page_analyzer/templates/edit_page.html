@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Анализатор страниц</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body class="min-vh-100 d-flex flex-column">
+    <header class="flex-shrink-0">
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark px-3">
+        <a class="navbar-brand" href="/">Анализатор страниц</a>
+        <div id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link " href="/urls">Сайты</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    
+    {% if messages %}
+      {% for cat, mes in messages %}
+        <div class="alert {{cat}}" role="alert">{{mes}}</div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="container-md">
+      <h1 class="pt-3">Сайт: {{ name }}</h1>
+      <table class="table table-hover border data-test="url"">
+          <tbody>
+              <tr>
+                <td>ID</td>
+                <td>{{ id }}</td>
+              </tr>
+              <tr>
+                <td>Имя</td>
+                <td>{{ name }}</td>
+              </tr>
+              <tr>
+                <td>Дата создания</td>
+                <td>{{ created_at }}</td>
+              </tr>
+          </tbody>
+      </table>
+
+      <h2 class="pt-2">Проверки</h2>
+      <form action="{{ url_for('check_url', id=id) }}" method="post" class="d-flex top-50">
+        <input type="submit" class="btn btn-primary btn-sm p-2 my-3 top-50" value="Запустить проверку">
+      </form>
+
+      <table class="table table-hover" data-test="checks">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Код ответа</th>
+                <th scope="col">h1</th>
+                <th scope="col">title</th>
+                <th scope="col">description</th>
+                <th scope="col">Дата создания</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if rows %}
+            {% for row in rows %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] if row[1] }}</td>
+                    <td>{{ row[2] if row[2] }}</td>
+                    <td>{{ row[3] if row[3] }}</td>
+                    <td>{{ row[4] if row[4] }}</td>
+                    <td>{{ row[5] if row[5] }}</td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+  </div>
+  
+  <footer class="border-top py-3 mt-5 flex-shrink-0">
+    <div class="container-lg">
+        <div class="text-center">
+            <a href="https://ru.hexlet.io/" target="_blank">Hexlet</a>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+  </body>
+</html>

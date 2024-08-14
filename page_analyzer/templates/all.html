@@ -16,7 +16,6 @@
           </ul>
         </div>
       </nav>
-      <meta name="description" content="12345">
     </header>
     
     {% if messages %}
@@ -24,20 +23,33 @@
         <div class="alert {{cat}}" role="alert">{{mes}}</div>
       {% endfor %}
     {% endif %}
-    <main class="flex-grow-1">
-      <div class="container-lg mt-3">
-        <div class="row">
-          <div class="col-12 col-md-10 col-lg-8 mx-auto border rounded-3 bg-light p-5">
-            <h1 class="display-3">Анализатор страниц</h1>
-            <p class="lead">Бесплатно проверяйте сайты на SEO-пригодность</p>
-            <form action="/urls " method="post" class="d-flex justify-content-center">
-              <input type="text" name="url" placeholder="https://www.example.com" value=""  class="form-control form-control-lg" required>
-              <input type="submit" class="btn btn-primary  btn-lg ms-3 px-5 text-uppercase mx-3" value="Проверить">
-            </form>
-          </div>
-        </div>
-      </div>
-    </main>
+
+    <div class="container-md">
+        <h1 class="pt-3">Сайты</h1>
+        <table class="table table-hover" data-test="urls">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Последняя проверка</th>
+                    <th scope="col">Код ответа</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if rows %}
+                {% for row in rows %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>
+                          <a href="{{url_for('url_id', id=row[0])}}" >{{ row[1] }}</a></td>
+                        <td>{{ row[4] if row[4] }}</td>
+                        <td>{{ row[3] if row[3] }}</td>
+                    </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
     
     <footer class="border-top py-3 mt-5 flex-shrink-0">
       <div class="container-lg">

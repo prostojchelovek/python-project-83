@@ -7,3 +7,6 @@ dist/
 coverage.xml
 .pytest_cache/
 .env
+*copy*
+any.py
+dist/
